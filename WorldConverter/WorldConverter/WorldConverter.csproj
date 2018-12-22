@@ -66,11 +66,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Format\Anvils\Anvil.cs" />
-    <Compile Include="Format\BaseRegionLoader.cs" />
+    <Compile Include="Format\Data\JavaLevelData.cs" />
+    <Compile Include="Format\Data\ILevelData.cs" />
+    <Compile Include="Format\Region\Anvil.cs" />
+    <Compile Include="Format\BaseLevelProvider.cs" />
+    <Compile Include="Format\Region\RegionLoader.cs" />
     <Compile Include="Format\Chunk.cs" />
     <Compile Include="Format\ILevelProvider.cs" />
     <Compile Include="Format\LevelProviderManager.cs" />
+    <Compile Include="Format\Region\RegionLevelProvider.cs" />
     <Compile Include="Format\SubChunk.cs" />
     <Compile Include="ICloneable.cs" />
     <Compile Include="MainForm.cs">

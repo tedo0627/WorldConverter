@@ -1,4 +1,5 @@
 ﻿using MineNET.NBT.Tags;
+using WorldConverter.Format.Data;
 
 namespace WorldConverter.Format
 {
@@ -6,12 +7,16 @@ namespace WorldConverter.Format
     {
         string FolderPath { get; }
 
-        CompoundTag LevelData { get; }
-        
+        ILevelData LevelData { get; }
+
+        int Dimension { get; }
+
         bool IsValid(string path);
 
-        void SetWorldName(string name);
+        void Convert(string levelPath, string savePath, int dimension);
 
-        void ConvertAsync(string loadPath, string savePath);
+        Chunk DeserializeChunk(CompoundTag tag);
+
+        CompoundTag SerializeChunk(Chunk chunk);
     }
 }

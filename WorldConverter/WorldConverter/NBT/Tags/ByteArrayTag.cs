@@ -1,6 +1,6 @@
-﻿using MineNET.NBT.Data;
+﻿using System;
+using MineNET.NBT.Data;
 using MineNET.NBT.IO;
-using System;
 
 namespace MineNET.NBT.Tags
 {
@@ -22,11 +22,6 @@ namespace MineNET.NBT.Tags
         public ByteArrayTag(string name, byte[] data) : base(name, data)
         {
 
-        }
-
-        public override string ToString()
-        {
-            return $"ByteArrayTag : Name {this.Name} : Data {this.Data}";
         }
 
         internal override void Write(NBTStream stream)

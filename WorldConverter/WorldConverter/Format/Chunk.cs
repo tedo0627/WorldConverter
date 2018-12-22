@@ -45,6 +45,10 @@ namespace WorldConverter.Format
         {
             for (int i = 0; i < this.SubChunks.Length; ++i)
             {
+                if (this.SubChunks[i] == null)
+                {
+                    continue;
+                }
                 this.SubChunks[i].Convert();
             }
         }

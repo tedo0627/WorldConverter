@@ -1,6 +1,9 @@
 ﻿using System;
+using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using WorldConverter.Format;
+using static System.Environment;
 
 namespace WorldConverter
 {
@@ -10,6 +13,8 @@ namespace WorldConverter
 
         public bool IsExcecuting { get; set; } = false;
 
+        public bool IsErrorCancelled { get; set; } = false;
+
         public MainForm()
         {
             MainForm.Form = this;
@@ -17,17 +22,12 @@ namespace WorldConverter
             this.InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void SelectLoadDirectory(object sender, EventArgs e)
         {
             FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog
             {
                 Description = "変換するワールドを選択してください",
-                RootFolder = System.Environment.SpecialFolder.MyComputer
+                RootFolder = SpecialFolder.MyComputer
             };
             if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
             {
@@ -41,7 +41,7 @@ namespace WorldConverter
             FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog
             {
                 Description = "保存先を選択してください",
-                RootFolder = System.Environment.SpecialFolder.MyComputer
+                RootFolder = SpecialFolder.MyComputer
             };
             if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
             {
@@ -50,9 +50,19 @@ namespace WorldConverter
             folderBrowserDialog.Dispose();
         }
 
+        public int GetMaxProgress()
+        {
+            return this.Progress.Maximum;
+        }
+
         public void SetMaxProgress(int progress)
         {
             this.Progress.Maximum = progress;
+        }
+
+        public int GetProgressValue()
+        {
+            return this.Progress.Value;
         }
 
         public void SetProgressValue(int value)
@@ -72,19 +82,56 @@ namespace WorldConverter
                 this.Log("変換実行中に処理を実行することはできません");
                 return;
             }
-            this.IsExcecuting = true;
+            if (this.LoadDirectory.Text == "" || this.SaveDirectory.Text == "")
+            {
+                this.Log("読み込むワールドと保存先を指定してください");
+                return;
+            }
 
-            this.ClearLog();
+            this.IsExcecuting = true;
+            
             this.Log("実行を開始しました");
-            this.Convert();
+            try
+            {
+                this.Convert();
+            }
+            catch (Exception ex)
+            {
+                this.Log("エラーが発生しました");
+                this.Log(ex.ToString());
+                this.IsExcecuting = false;
+            }
         }
         
         private void Convert()
         {
-            string path = this.LoadDirectory.Text;
+            string levelPath = this.LoadDirectory.Text;
+            string savePath = Path.Combine(this.SaveDirectory.Text, this.GetWorldName());
             LevelProviderManager manager = new LevelProviderManager();
-            ILevelProvider provider = manager.GetProvider(path);
-            provider.ConvertAsync(path, $"{this.SaveDirectory.Text}\\{this.WorldName.Text}");
+            ILevelProvider provider = manager.GetProvider(levelPath);
+            provider.Convert(levelPath, savePath, this.GetDimensionId());
+            this.CheckFinish();
+        }
+
+        private async void CheckFinish()
+        {
+            while (true)
+            {
+                await Task.Delay(100);
+                if (this.IsErrorCancelled)
+                {
+                    this.Log("エラーが発生しました");
+                    this.IsExcecuting = false;
+                    this.IsErrorCancelled = false;
+                    return;
+                }
+                if (this.GetMaxProgress() == this.GetProgressValue())
+                {
+                    this.Log("変換が完了しました");
+                    this.IsExcecuting = false;
+                    return;
+                }
+            }
         }
 
         public void Log(string text)
@@ -101,6 +148,11 @@ namespace WorldConverter
         public string GetWorldName()
         {
             return this.WorldName.Text;
+        }
+
+        public int GetDimensionId()
+        {
+            return this.Dimension.SelectedIndex;
         }
     }
 }

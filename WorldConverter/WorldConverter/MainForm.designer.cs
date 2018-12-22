@@ -39,6 +39,8 @@
             this.Excecute = new System.Windows.Forms.Button();
             this.Console = new System.Windows.Forms.ListBox();
             this.Progress = new System.Windows.Forms.ProgressBar();
+            this.Dimension = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // LoadDirectory
@@ -112,9 +114,9 @@
             // 
             // Excecute
             // 
-            this.Excecute.Location = new System.Drawing.Point(45, 342);
+            this.Excecute.Location = new System.Drawing.Point(397, 397);
             this.Excecute.Name = "Excecute";
-            this.Excecute.Size = new System.Drawing.Size(75, 23);
+            this.Excecute.Size = new System.Drawing.Size(88, 23);
             this.Excecute.TabIndex = 8;
             this.Excecute.Text = "実行する";
             this.Excecute.UseVisualStyleBackColor = true;
@@ -127,7 +129,7 @@
             this.Console.FormattingEnabled = true;
             this.Console.HorizontalScrollbar = true;
             this.Console.ItemHeight = 12;
-            this.Console.Location = new System.Drawing.Point(457, 37);
+            this.Console.Location = new System.Drawing.Point(521, 53);
             this.Console.Name = "Console";
             this.Console.ScrollAlwaysVisible = true;
             this.Console.SelectionMode = System.Windows.Forms.SelectionMode.None;
@@ -136,16 +138,40 @@
             // 
             // Progress
             // 
-            this.Progress.Location = new System.Drawing.Point(136, 342);
+            this.Progress.Location = new System.Drawing.Point(521, 397);
             this.Progress.Name = "Progress";
-            this.Progress.Size = new System.Drawing.Size(257, 23);
+            this.Progress.Size = new System.Drawing.Size(291, 23);
             this.Progress.TabIndex = 10;
             // 
-            // Form1
+            // Dimension
+            // 
+            this.Dimension.FormattingEnabled = true;
+            this.Dimension.Items.AddRange(new object[] {
+            "Overworld",
+            "Nether",
+            "End"});
+            this.Dimension.Location = new System.Drawing.Point(144, 362);
+            this.Dimension.Name = "Dimension";
+            this.Dimension.Size = new System.Drawing.Size(121, 20);
+            this.Dimension.TabIndex = 12;
+            this.Dimension.Text = "Overworld";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(130, 326);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(148, 12);
+            this.label4.TabIndex = 13;
+            this.label4.Text = "ディメンションを選択してください";
+            // 
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(865, 471);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.Dimension);
             this.Controls.Add(this.Progress);
             this.Controls.Add(this.Console);
             this.Controls.Add(this.Excecute);
@@ -157,9 +183,8 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.SelectDirectory1);
             this.Controls.Add(this.LoadDirectory);
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -178,6 +203,8 @@
         private System.Windows.Forms.Button Excecute;
         private System.Windows.Forms.ListBox Console;
         private System.Windows.Forms.ProgressBar Progress;
+        private System.Windows.Forms.ComboBox Dimension;
+        private System.Windows.Forms.Label label4;
     }
 }
 
