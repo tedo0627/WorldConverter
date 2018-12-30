@@ -109,7 +109,10 @@
     <Compile Include="Utils\ArrayUtils.cs" />
     <Compile Include="Utils\Binary.cs" />
     <Compile Include="Utils\BinaryStream.cs" />
+    <Compile Include="Utils\BlockIDs.cs" />
+    <Compile Include="Utils\ItemIDs.cs" />
     <Compile Include="Utils\MemorySpan.cs" />
+    <Compile Include="Utils\Util.cs" />
     <Compile Include="Utils\VarInt.cs" />
     <Compile Include="Utils\ZlibStream.cs" />
     <EmbeddedResource Include="MainForm.resx">
